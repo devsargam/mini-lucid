@@ -15,7 +15,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mini Lucid",
-  description: "A simple, minimalistic editor",
+  description: "A simple, minimalistic AI editor",
+  twitter: {
+    card: "summary_large_image",
+    title: "Mini Lucid",
+    description: "A simple, minimalistic AI editor",
+    images: ["/images/og-image.jpg"],
+  },
 };
 
 export default function RootLayout({
