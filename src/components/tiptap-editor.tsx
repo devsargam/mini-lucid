@@ -17,7 +17,7 @@ export default function TipTapEditor() {
   const { value, setValue } = useEditorState();
 
   return (
-    <section className="max-w-[1000px] flex flex-col h-full">
+    <section className="max-w-[1000px] flex flex-col h-full mx-auto">
       <div className="mb-4 flex items-center justify-between">
         <div className="group flex min-w-0 items-center gap-2">
           <h1
