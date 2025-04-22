@@ -10,7 +10,7 @@ export default function EditorPage() {
     <main className="flex h-screen w-screen">
       <AppSidebar />
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel className="p-4">
+        <ResizablePanel className="px-8 py-6">
           <TipTapEditor />
         </ResizablePanel>
         <ResizableHandle withHandle />
