@@ -2,12 +2,8 @@
 
 import { cn } from "@/lib/utils";
 import { MinimalTiptapEditor } from "./minimal-tiptap";
-import { Form, useForm } from "react-hook-form";
-import { FormField } from "./ui/form";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Content, Editor } from "@tiptap/react";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEditorState } from "@/store/editor-state";
 
 const formSchema = z.object({
   description: z
@@ -18,7 +14,7 @@ const formSchema = z.object({
 });
 
 export default function TipTapEditor() {
-  const [value, setValue] = useState<Content>("");
+  const { value, setValue } = useEditorState();
 
   return (
     <section className="max-w-[1000px] flex flex-col h-full">
