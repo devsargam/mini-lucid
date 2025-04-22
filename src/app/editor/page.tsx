@@ -16,13 +16,13 @@ export default function EditorPage() {
     <main className="flex h-screen w-screen">
       <AppSidebar />
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={75} className="px-8 py-6">
+        <ResizablePanel defaultSize={66} className="px-8 py-6">
           <Suspense fallback={<div>Loading...</div>}>
             <TipTapEditor />
           </Suspense>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={25} className="p-4">
+        <ResizablePanel defaultSize={33} className="p-4">
           <ChatSection />
         </ResizablePanel>
       </ResizablePanelGroup>
