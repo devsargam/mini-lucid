@@ -210,6 +210,29 @@ export const useMinimalTiptapEditor = ({
     ...props,
   });
 
+  // Effect to update editor content when the external value prop changes
+  React.useEffect(() => {
+    if (!editor || !value) {
+      return;
+    }
+
+    // Check if the external value is different from the current editor content
+    const editorContent = getOutput(editor, output);
+    // A simple string comparison might not be robust for complex content (JSON).
+    // Consider a deep comparison if 'value' can be JSON.
+    const isSame =
+      typeof value === "string" && typeof editorContent === "string"
+        ? value === editorContent
+        : JSON.stringify(value) === JSON.stringify(editorContent); // Basic JSON check
+
+    if (!isSame) {
+      // Use slice(0) to create a shallow copy if 'value' is JSON,
+      // although setContent handles this internally for ProseMirror states.
+      // The 'false' argument prevents triggering the 'onUpdate' callback again.
+      editor.commands.setContent(value, false);
+    }
+  }, [value, editor, output]); // Rerun effect if value, editor instance, or output format changes
+
   return editor;
 };
 
