@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import { MinimalTiptapEditor } from "./minimal-tiptap";
 import { Form, useForm } from "react-hook-form";
 import { FormField } from "./ui/form";
-import { useCallback, useRef } from "react";
-import { Editor } from "@tiptap/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Content, Editor } from "@tiptap/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -18,27 +18,7 @@ const formSchema = z.object({
 });
 
 export default function TipTapEditor() {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      description: "",
-    },
-  });
-  const editorRef = useRef<Editor | null>(null);
-
-  const handleCreate = useCallback(
-    ({ editor }: { editor: Editor }) => {
-      if (form.getValues("description") && editor.isEmpty) {
-        editor.commands.setContent(form.getValues("description"));
-      }
-      editorRef.current = editor;
-    },
-    [form]
-  );
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-  };
+  const [value, setValue] = useState<Content>("");
 
   return (
     <section className="max-w-[1000px] flex flex-col h-full">
@@ -53,35 +33,27 @@ export default function TipTapEditor() {
         </div>
       </div>
       {/* <RichTextEditor /> */}
-      <Form
-        {...form}
-        onSubmit={(e) => form.handleSubmit(onSubmit)}
-        className="w-full space-y-6 flex-1 h-full"
-      >
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <MinimalTiptapEditor
-              {...field}
-              throttleDelay={0}
-              className={cn("w-full", {
-                "border-destructive focus-within:border-destructive h-full":
-                  form.formState.errors.description,
-              })}
-              editorContentClassName="some-class"
-              output="html"
-              placeholder="Type your description here..."
-              onCreate={handleCreate}
-              autofocus={true}
-              immediatelyRender={true}
-              editable={true}
-              injectCSS={true}
-              editorClassName="focus:outline-none p-5"
-            />
+      <div className="w-full space-y-6 flex-1 h-full">
+        <MinimalTiptapEditor
+          value={value}
+          onChange={(value) => {
+            setValue(value);
+          }}
+          throttleDelay={0}
+          className={cn(
+            "w-full h-full"
+            // "border-destructive focus-within:border-destructive h-full"
           )}
-        ></FormField>
-      </Form>
+          editorContentClassName="some-class"
+          output="html"
+          placeholder="Type your description here..."
+          autofocus
+          immediatelyRender
+          editable
+          injectCSS
+          editorClassName="focus:outline-none p-5"
+        />
+      </div>
     </section>
   );
 }
