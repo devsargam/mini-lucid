@@ -11,7 +11,7 @@ const TipTapEditor = dynamic(() => import("@/components/tiptap-editor"), {
   ssr: false,
 });
 
-export default function HomePage() {
+export default function Home() {
   return (
     <main className="flex h-screen w-screen">
       <AppSidebar />
