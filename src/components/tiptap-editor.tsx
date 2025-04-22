@@ -1,17 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { MinimalTiptapEditor } from "./minimal-tiptap";
 import { z } from "zod";
 import { useEditorState } from "@/store/editor-state";
-
-const formSchema = z.object({
-  description: z
-    .string({
-      required_error: "Description is required",
-    })
-    .min(1, "Description is required"),
-});
 
 export default function TipTapEditor() {
   const { value, setValue } = useEditorState();
@@ -28,7 +19,6 @@ export default function TipTapEditor() {
           </h1>
         </div>
       </div>
-      {/* <RichTextEditor /> */}
       <div className="w-full space-y-6 flex-1 h-full">
         <MinimalTiptapEditor
           value={value}
@@ -36,10 +26,7 @@ export default function TipTapEditor() {
             setValue(value);
           }}
           throttleDelay={0}
-          className={cn(
-            "w-full h-full"
-            // "border-destructive focus-within:border-destructive h-full"
-          )}
+          className="w-full h-full"
           editorContentClassName="some-class"
           output="html"
           placeholder="Type your description here..."

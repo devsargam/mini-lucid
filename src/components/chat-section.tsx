@@ -5,9 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Mic, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useEditorState } from "@/store/editor-state";
+import { useEffect } from "react";
 
 export function ChatSection() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const { setValue } = useEditorState();
 
   const handleTextareaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -16,6 +19,13 @@ export function ChatSection() {
       target: { value: event.target.value },
     } as React.ChangeEvent<HTMLInputElement>);
   };
+
+  useEffect(() => {
+    if (messages[messages.length - 1]?.role === "assistant") {
+      setValue(messages[messages.length - 1].content);
+      console.log(messages[messages.length - 1].content);
+    }
+  }, [messages]);
 
   return (
     <section className="flex flex-col w-full h-full p-4">
