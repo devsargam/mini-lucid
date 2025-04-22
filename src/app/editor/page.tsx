@@ -1,17 +1,25 @@
+"use client";
+
 import { AppSidebar } from "@/components/app-sidebar";
 import { ChatSection } from "@/components/chat-section";
-import { TipTapEditor } from "@/components/tiptap-editor";
 import { ResizableHandle } from "@/components/ui/resizable";
 import { ResizablePanelGroup } from "@/components/ui/resizable";
 import { ResizablePanel } from "@/components/ui/resizable";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
+const TipTapEditor = dynamic(() => import("@/components/tiptap-editor"), {
+  ssr: false,
+});
 
 export default function EditorPage() {
   return (
     <main className="flex h-screen w-screen">
       <AppSidebar />
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel className="px-8 py-6">
-          <TipTapEditor />
+        <ResizablePanel defaultSize={75} className="px-8 py-6">
+          <Suspense fallback={<div>Loading...</div>}>
+            <TipTapEditor />
+          </Suspense>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={25} className="p-4">
